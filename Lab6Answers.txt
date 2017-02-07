@@ -1,0 +1,21 @@
+1.1 LevelSystem subscribes to the EnInit event.
+
+1.2. The game level number and all the required data for this level is stored in the EnInit.
+
+1.3. The argument is a string of the directory of the background image from the level.
+A reference of the string is passed in the BackgroundCreator and is assigned to the m_fileName of the object.
+Now the m_fileName contains the string reference of the background image of the level.
+
+1.4. It takes in a reference of type entity and assigns the position and background for the entity.
+
+1.5. A type Position and a type Background is assigned to a Background Entity.
+
+1.6 Vector2f and a bool.
+Entity assigns type Tank, type Motion, type Position and type Volume.
+
+1.7 tankBaseEntity is stored in a variable in TurretCreator called m_parentEntity.
+
+1.8 Because we want to make the turret move aswell when the TankBase is moved. If the Turret Entity didn't have a 
+Parent component that stores a reference to the TankBase entity, then the turret wouldn't move when the TankBase
+has been moved. The Turret needs to keep track of the position of the TankBase as the turret's position is based on
+the TankBase's position.

@@ -1,0 +1,19 @@
+2.1 The first loop in MovementSystem.cpp - This loop will iterate through the all the available entities that 
+have a Motion and Position component. It gets the new pos and sets it to the entity is on screen, else the motion
+component is set to 0 and the rest of the loop is skipped. 
+
+2.2 The second loop in MovementSystem.cpp - This loop will iterate through the all the available entities that 
+have a Position and Parent component. Get the position from the parent entity. Assign the current positions to the 
+positions of the parent entity.
+
+2.3 MovementSystem::update() is called in the Game.cpp in the Game::update().
+
+2.4 In RenderSystem.cpp - The purpose of the background component is to check if all of the available  entities 
+contains a background component before proceeding on with the loop. In the loop, the m_bgSprite is set to a texture
+and a portion of the bg texture is drawn each time. Background texture is drawn first before the our tank sprite
+is drawn.
+
+A Background Entity is assigned to the Background Component.
+
+2.5 The turrent texture of the tank disappears since there is no longer a Display Component assigned to the
+turrent entity.
