@@ -1,4 +1,11 @@
 #include "utils/LevelLoader.h"
+void operator >> (const YAML::Node& nodeNode, NodeData& node)
+{
+	node.m_type = nodeNode["type"].as<std::string>();
+	node.m_position.x = nodeNode["position"]["x"].as<float>();
+	node.m_position.y = nodeNode["position"]["y"].as<float>();
+	node.m_radius = nodeNode["radius"].as<double>();
+}
 
 void operator >> (const YAML::Node& obstacleNode, ObstacleData& obstacle)
 {
@@ -43,6 +50,14 @@ void operator >> (const YAML::Node& levelNode, LevelData& level)
 	  ObstacleData obstacle;
 	  obstaclesNode[i] >> obstacle;
 	  level.m_obstacles.push_back(obstacle);
+   }
+
+   const YAML::Node& nodesNode = levelNode["nodes"].as<YAML::Node>();
+   for (unsigned i = 0; i < nodesNode.size(); ++i)
+   {
+	   NodeData node;
+	   nodesNode[i] >> node;
+	   level.m_nodes.push_back(node);
    }
 }
 

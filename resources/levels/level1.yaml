@@ -84,3 +84,64 @@ obstacles:
    - type: wall
      position: {x: 1032, y: 632}
      rotation: 0
+nodes:
+   - type: node
+     position: {x: 505, y: 724}
+     radius: 5
+   - type: node
+     position: {x: 683, y: 865}
+     radius: 5
+   - type: node
+     position: {x: 840, y: 820}
+     radius: 5
+   - type: node
+     position: {x: 995, y: 730}
+     radius: 5
+   - type: node
+     position: {x: 1135, y: 830}
+     radius: 5
+   - type: node
+     position: {x: 1280, y: 700}
+     radius: 5
+   - type: node
+     position: {x: 1178, y: 540}
+     radius: 5
+   - type: node
+     position: {x: 1030, y: 430}
+     radius: 5
+   - type: node
+     position: {x: 880, y: 500}
+     radius: 5
+   - type: node
+     position: {x: 700, y: 600}
+     radius: 5
+   - type: node
+     position: {x: 545, y: 530}
+     radius: 5
+   - type: node
+     position: {x: 360, y: 560}
+     radius: 5
+   - type: node
+     position: {x: 240, y: 500}
+     radius: 5
+   - type: node
+     position: {x: 200, y: 370}
+     radius: 5
+   - type: node
+     position: {x: 100, y: 150}
+     radius: 5
+   - type: node
+     position: {x: 190, y: 215}
+     radius: 5
+   - type: node
+     position: {x: 260, y: 130}
+     radius: 5
+   - type: node
+     position: {x: 435, y: 105}
+     radius: 5
+   - type: node
+     position: {x: 560, y: 160}
+     radius: 5
+   - type: node
+     position: {x: 683, y: 273}
+     radius: 5

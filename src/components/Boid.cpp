@@ -5,7 +5,7 @@ sf::Vector2f Boid::pathFollowing(entityx::Entity::Id aiId,
 {
 	sf::Vector2f target;
 
-	//if (path != null)
+	if (path.getNode().size() != 0)
 	{
 		entityx::Entity aiTank = entities.get(aiId);
 		Position::Handle aiPos = aiTank.component<Position>();
@@ -18,6 +18,7 @@ sf::Vector2f Boid::pathFollowing(entityx::Entity::Id aiId,
 				currentNode = nodes.size() - 1;
 			}
 		}
+		return target;
 	}
 	return sf::Vector2f(0, 1);
 }

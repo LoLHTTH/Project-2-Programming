@@ -52,7 +52,7 @@ void RenderSystem::update(EntityManager &entities,
 				m_window.draw(turretRect);	*/					
 		   }					
 		   m_sprite.setPosition(position->m_position);
-		   m_sprite.setRotation(position->m_rotation);		 
+		   m_sprite.setRotation(position->m_rotation);
 		   m_sprite.setTextureRect(display->m_coord);
 		   m_sprite.setColor(display->m_color);		 
 		   m_window.draw(m_sprite);		   

@@ -2,7 +2,7 @@
 
 
 TankAi::TankAi(std::vector<sf::CircleShape> const & obstacles, entityx::Entity::Id id)
-  : m_aiBehaviour(AiBehaviour::SEEK_PLAYER)
+  : m_aiBehaviour(AiBehaviour::PATH_FOLLOWING)
   , m_steering(0,0)
   , m_obstacles(obstacles)
 {
@@ -16,10 +16,12 @@ void TankAi::update(entityx::Entity::Id playerId,
 	entityx::Entity aiTank = entities.get(aiId);
 	Motion::Handle motion = aiTank.component<Motion>();
 	Position::Handle position = aiTank.component<Position>();
+	Boid boid;
 
 	sf::Vector2f vectorToPlayer = seek(playerId,
 		aiId,
 		entities);
+
 	switch (m_aiBehaviour)
 	{
 	case AiBehaviour::SEEK_PLAYER:
@@ -29,8 +31,16 @@ void TankAi::update(entityx::Entity::Id playerId,
 		m_velocity = Math::truncate(m_velocity + m_steering, MAX_SPEED);
 
 		break;
+	case AiBehaviour::PATH_FOLLOWING:
+		m_steering = m_steering + boid.pathFollowing(aiId,entities);
+		m_steering = Math::truncate(m_steering, MAX_FORCE);
+		//m_steering = m_steering / mass;
+		m_velocity = Math::truncate(m_velocity + m_steering, MAX_SPEED);
+		//mposition = position + m_velocity;
+		break;
 	case AiBehaviour::STOP:
 		motion->m_speed = 0;
+
 	default:
 		break;
 	}

@@ -10,6 +10,7 @@
 #include <Thor/Vectors.hpp>
 #include <iostream>
 #include <queue>
+#include "components\Boid.h"
 
 class TankAi 
 {
@@ -63,7 +64,8 @@ private:
 	{
 		SEEK_PLAYER,
 		STOP,
-		RETREAT
+		RETREAT,
+		PATH_FOLLOWING
 	} m_aiBehaviour;
   
 

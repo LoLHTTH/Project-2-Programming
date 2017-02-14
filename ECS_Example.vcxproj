@@ -25,6 +25,7 @@
     <ClInclude Include="include\components\Boid.h" />
     <ClInclude Include="include\components\Display.h" />
     <ClInclude Include="include\components\Motion.h" />
+    <ClInclude Include="include\components\Node.h" />
     <ClInclude Include="include\components\Parent.h" />
     <ClInclude Include="include\components\Path.h" />
     <ClInclude Include="include\components\PlayerControl.h" />
@@ -57,6 +58,7 @@
     <ClCompile Include="src\components\Boid.cpp" />
     <ClCompile Include="src\components\Display.cpp" />
     <ClCompile Include="src\components\Motion.cpp" />
+    <ClCompile Include="src\components\Node.cpp" />
     <ClCompile Include="src\components\Parent.cpp" />
     <ClCompile Include="src\components\Path.cpp" />
     <ClCompile Include="src\components\PlayerControl.cpp" />

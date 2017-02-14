@@ -33,6 +33,13 @@ struct ProjectileData
 	int m_damage;
 };
 
+struct NodeData
+{
+	std::string m_type;
+	sf::Vector2f m_position;
+	double m_radius;
+};
+
 struct LevelData
 {
    BackgroundData m_background;
@@ -40,6 +47,8 @@ struct LevelData
    TankData m_aiTank;
    ProjectileData m_projectile;
    std::vector<ObstacleData> m_obstacles;
+   std::vector<NodeData> m_nodes;
+
 };
 
 class LevelLoader
