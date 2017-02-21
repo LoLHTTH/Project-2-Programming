@@ -10,15 +10,20 @@ TankAi::TankAi(std::vector<sf::CircleShape> const & obstacles, entityx::Entity::
 
 void TankAi::update(entityx::Entity::Id playerId,
 	entityx::Entity::Id aiId,
+	entityx::Entity::Id nodeId,
+	int &currentIndex,
 	entityx::EntityManager& entities,
 	double dt)
 {
 	entityx::Entity aiTank = entities.get(aiId);
 	Motion::Handle motion = aiTank.component<Motion>();
 	Position::Handle position = aiTank.component<Position>();
-	Boid boid;
 
 	sf::Vector2f vectorToPlayer = seek(playerId,
+		aiId,
+		entities);
+
+	sf::Vector2f vectorToNode = seek(nodeId,
 		aiId,
 		entities);
 
@@ -32,11 +37,10 @@ void TankAi::update(entityx::Entity::Id playerId,
 
 		break;
 	case AiBehaviour::PATH_FOLLOWING:
-		m_steering = m_steering + boid.pathFollowing(aiId,entities);
+		m_steering = m_steering + thor::unitVector(vectorToNode);
 		m_steering = Math::truncate(m_steering, MAX_FORCE);
-		//m_steering = m_steering / mass;
 		m_velocity = Math::truncate(m_velocity + m_steering, MAX_SPEED);
-		//mposition = position + m_velocity;
+
 		break;
 	case AiBehaviour::STOP:
 		motion->m_speed = 0;
@@ -59,10 +63,10 @@ void TankAi::update(entityx::Entity::Id playerId,
 		m_steering.x = 0;
 		m_steering.y = 0;
 	}
-	else if ((static_cast<int>(std::round(dest - currentRotation + 360))) % 360 < 180)
-	{
-		// rotate clockwise
-		position->m_rotation += 1;
+else if ((static_cast<int>(std::round(dest - currentRotation + 360))) % 360 < 180)
+    {
+        // rotate clockwise
+        position->m_rotation = static_cast<int>((position->m_rotation) + 1) % 360;
 	}
 	else
 	{
@@ -70,15 +74,50 @@ void TankAi::update(entityx::Entity::Id playerId,
 		position->m_rotation -= 1;
 	}
 
-	
-	if (thor::length(vectorToPlayer) < MAX_SEE_AHEAD)
+	if (m_aiBehaviour == AiBehaviour::PATH_FOLLOWING)
 	{
-		m_aiBehaviour = AiBehaviour::STOP;
-	}	
-	else
+		if (thor::length(vectorToNode) < MAX_SEE_AHEAD)
+		{
+			if (currentIndex < 20 && !turnBack)
+			{
+				currentIndex++;
+			}
+			if (currentIndex == 20)
+			{
+				//m_aiBehaviour = AiBehaviour::SEEK_PLAYER;
+				position->m_rotation = 180;
+				turnBack = true;
+			}
+			if (turnBack)
+			{
+				if (currentIndex > 0)
+				{
+					currentIndex--;
+				}
+				else
+				{
+					turnBack = false;
+				}
+			}
+			std::cout << "At Index : " << currentIndex + 1 << std::endl;
+		}
+		else
+		{
+			motion->m_speed = thor::length(m_velocity);
+		}
+	}
+
+	if (m_aiBehaviour == AiBehaviour::SEEK_PLAYER)
 	{
-		motion->m_speed = thor::length(m_velocity);	
-		m_aiBehaviour = AiBehaviour::SEEK_PLAYER;
+		if (thor::length(vectorToPlayer) < MAX_SEE_AHEAD)
+		{
+			m_aiBehaviour = AiBehaviour::STOP;
+		}	
+		else
+		{
+			motion->m_speed = thor::length(m_velocity);	
+			m_aiBehaviour = AiBehaviour::SEEK_PLAYER;
+		}
 	}
 }
 

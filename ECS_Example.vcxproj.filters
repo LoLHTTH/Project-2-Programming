@@ -132,6 +132,9 @@
     <ClInclude Include="include\components\Path.h">
       <Filter>Header Files\components</Filter>
     </ClInclude>
+    <ClInclude Include="include\systems\HUDSystem.h">
+      <Filter>Header Files\systems</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\EntityCreator.cpp">
@@ -223,6 +226,9 @@
     </ClCompile>
     <ClCompile Include="src\components\Path.cpp">
       <Filter>Source Files\components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\systems\HUDSystem.cpp">
+      <Filter>Source Files\systems</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

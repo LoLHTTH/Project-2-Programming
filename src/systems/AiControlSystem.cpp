@@ -10,6 +10,7 @@ void AiControlSystem::configure(entityx::EventManager& events)
    events.subscribe<EvReportPlayerId>(*this);
    events.subscribe<entityx::ComponentAddedEvent<Ai>>(*this);
    events.subscribe<entityx::ComponentAddedEvent<Wall>>(*this);
+   events.subscribe<entityx::ComponentAddedEvent<Node>>(*this);
 }
 
 void AiControlSystem::receive(const EvReportPlayerId& e)
@@ -36,15 +37,32 @@ void AiControlSystem::receive(const entityx::ComponentAddedEvent<Wall>& e)
 	m_obstacles.push_back(circle);	
 }
 
+void AiControlSystem::receive(const entityx::ComponentAddedEvent<Node>& e)
+{
+	entityx::Entity ent = e.entity;
+	Volume::Handle nodeVol = ent.component<Volume>();
+	Position::Handle nodePos = ent.component<Position>();	
+
+	m_nodeIds.push_back(ent.id());
+
+	sf::CircleShape circle(nodeVol->m_box.getRect().width * 1.5f);
+	circle.setOrigin(circle.getRadius(), circle.getRadius());
+	circle.setPosition(nodePos->m_position);
+	m_pts.push_back(circle);
+}
+
 void AiControlSystem::update(entityx::EntityManager& entities,
                              entityx::EventManager& events,
                              double dt)
 {
    Ai::Handle ai;
+
    for (entityx::Entity entity : entities.entities_with_components(ai))
    {
 	   m_tankAi->update(m_playerId, 
 		                    entity.id(),
+							m_nodeIds.at(currentIndex),
+							currentIndex,
 							entities, 
 							dt);
   

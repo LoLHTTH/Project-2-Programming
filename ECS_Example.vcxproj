@@ -43,6 +43,7 @@
     <ClInclude Include="include\ScreenSize.h" />
     <ClInclude Include="include\systems\AiControlSystem.h" />
     <ClInclude Include="include\systems\Events.h" />
+    <ClInclude Include="include\systems\HUDSystem.h" />
     <ClInclude Include="include\systems\LevelSystem.h" />
     <ClInclude Include="include\systems\MovementSystem.h" />
     <ClInclude Include="include\systems\PlayerControlSystem.h" />
@@ -75,6 +76,7 @@
     <ClCompile Include="src\ResourcePath.cpp" />
     <ClCompile Include="src\ScreenSize.cpp" />
     <ClCompile Include="src\systems\AiControlSystem.cpp" />
+    <ClCompile Include="src\systems\HUDSystem.cpp" />
     <ClCompile Include="src\systems\LevelSystem.cpp" />
     <ClCompile Include="src\systems\MovementSystem.cpp" />
     <ClCompile Include="src\systems\PlayerControlSystem.cpp" />

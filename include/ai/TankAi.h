@@ -10,7 +10,6 @@
 #include <Thor/Vectors.hpp>
 #include <iostream>
 #include <queue>
-#include "components\Boid.h"
 
 class TankAi 
 {
@@ -21,6 +20,8 @@ public:
 
    void update(entityx::Entity::Id playerId,  
 	           entityx::Entity::Id aiId,
+			   entityx::Entity::Id nodeId,
+		       int &currentIndex,
                entityx::EntityManager& entities,
                double dt);
  
@@ -55,7 +56,9 @@ private:
 
 	const float MAX_FORCE = 10.0f;
 
-	float MAX_SPEED = 50.0f;
+	float MAX_SPEED = 100.0f;
+
+	bool turnBack;
 
 
 	std::vector<sf::CircleShape> const & m_obstacles;

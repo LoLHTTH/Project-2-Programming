@@ -8,6 +8,7 @@
 #include "components/Volume.h"
 #include "components/Position.h"
 #include "components/Display.h"
+#include "components\Node.h"
 
 class AiControlSystem
       : public entityx::System<AiControlSystem>
@@ -25,6 +26,8 @@ public:
 
    void receive(const entityx::ComponentAddedEvent<Wall>& e);
 
+   void receive(const entityx::ComponentAddedEvent<Node>& e);
+
    void update(entityx::EntityManager &entities,
                entityx::EventManager &events,
                double dt);
@@ -36,5 +39,10 @@ private:
 	entityx::Entity::Id m_playerId;
 
 	std::vector<sf::CircleShape> m_obstacles;
+
+	std::vector<entityx::Entity::Id> m_nodeIds;
+	std::vector<sf::CircleShape> m_pts;
+
+	int currentIndex;
 };
 
