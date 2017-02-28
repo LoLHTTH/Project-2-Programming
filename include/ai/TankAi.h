@@ -21,10 +21,11 @@ public:
    void update(entityx::Entity::Id playerId,  
 	           entityx::Entity::Id aiId,
 			   entityx::Entity::Id nodeId,
-		       int &currentIndex,
                entityx::EntityManager& entities,
+			 entityx::EventManager& eventManager,
                double dt);
- 
+   int getIndex();
+
    enum class AiType
    {
 	   AI_ID_NONE, 
@@ -60,6 +61,7 @@ private:
 
 	bool turnBack;
 
+	int m_index = 0;
 
 	std::vector<sf::CircleShape> const & m_obstacles;
 

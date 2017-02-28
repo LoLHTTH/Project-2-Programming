@@ -61,9 +61,9 @@ void AiControlSystem::update(entityx::EntityManager& entities,
    {
 	   m_tankAi->update(m_playerId, 
 		                    entity.id(),
-							m_nodeIds.at(currentIndex),
-							currentIndex,
+							m_nodeIds.at(m_tankAi->getIndex()),
 							entities, 
+						  events,
 							dt);
   
    }

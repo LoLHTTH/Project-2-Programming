@@ -42,7 +42,5 @@ private:
 
 	std::vector<entityx::Entity::Id> m_nodeIds;
 	std::vector<sf::CircleShape> m_pts;
-
-	int currentIndex;
 };
 

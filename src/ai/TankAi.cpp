@@ -11,8 +11,8 @@ TankAi::TankAi(std::vector<sf::CircleShape> const & obstacles, entityx::Entity::
 void TankAi::update(entityx::Entity::Id playerId,
 	entityx::Entity::Id aiId,
 	entityx::Entity::Id nodeId,
-	int &currentIndex,
 	entityx::EntityManager& entities,
+	entityx::EventManager& eventManager,
 	double dt)
 {
 	entityx::Entity aiTank = entities.get(aiId);
@@ -78,11 +78,12 @@ else if ((static_cast<int>(std::round(dest - currentRotation + 360))) % 360 < 18
 	{
 		if (thor::length(vectorToNode) < MAX_SEE_AHEAD)
 		{
-			if (currentIndex < 20 && !turnBack)
+			if (m_index < 20 && !turnBack)
 			{
-				currentIndex++;
+				m_index++;
+				eventManager.emit<EvReportNode>(m_index);
 			}
-			if (currentIndex == 20)
+			if (m_index == 20)
 			{
 				//m_aiBehaviour = AiBehaviour::SEEK_PLAYER;
 				position->m_rotation = 180;
@@ -90,16 +91,17 @@ else if ((static_cast<int>(std::round(dest - currentRotation + 360))) % 360 < 18
 			}
 			if (turnBack)
 			{
-				if (currentIndex > 0)
-				{
-					currentIndex--;
+				if (m_index > 0)
+				{			
+					m_index--;
+					eventManager.emit<EvReportNode>(m_index);
 				}
 				else
 				{
 					turnBack = false;
 				}
 			}
-			std::cout << "At Index : " << currentIndex + 1 << std::endl;
+			std::cout << "At Index : " << m_index + 1 << std::endl;
 		}
 		else
 		{
@@ -190,3 +192,7 @@ const sf::CircleShape TankAi::findMostThreateningObstacle(entityx::Entity::Id ai
 	return mostThreatening;
 }
 
+int TankAi::getIndex()
+{
+	return m_index;
+}

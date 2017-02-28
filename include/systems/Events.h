@@ -66,4 +66,13 @@ struct EvReportPlayerId : public entityx::Event<EvReportPlayerId>
 	entityx::Entity::Id m_playerId;
 };
 
+struct EvReportNode : public entityx::Event<EvReportNode>
+{
+	EvReportNode(int index) : m_index(index)
+	{
+
+	}
+	int m_index;
+};
+
 

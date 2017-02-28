@@ -124,6 +124,7 @@ void Game::update()
 void Game::render(double ms)
 {
 	m_systemManager.update<RenderSystem>(0.0);
+	m_systemManager.update<HUDSystem>(ms);
 	m_window.display();
 }
 
@@ -141,6 +142,7 @@ void Game::createSystems()
 	m_systemManager.add<MovementSystem>();	
 	m_systemManager.add<PlayerControlSystem>(m_keyHandler);
 	m_systemManager.add<AiControlSystem>();
+	m_systemManager.add<HUDSystem>(m_entityManager, m_window);
 	m_systemManager.configure();
 }
 
