@@ -141,8 +141,8 @@ void Game::createSystems()
 	m_systemManager.add<RenderSystem>(m_window, spTexture);	
 	m_systemManager.add<MovementSystem>();	
 	m_systemManager.add<PlayerControlSystem>(m_keyHandler);
-	m_systemManager.add<AiControlSystem>();
-	m_systemManager.add<HUDSystem>(m_entityManager, m_window);
+	m_systemManager.add<AiControlSystem>(); // Add an ai control system
+	m_systemManager.add<HUDSystem>(m_window); // Add a HUDSystem
 	m_systemManager.configure();
 }
 

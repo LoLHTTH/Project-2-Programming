@@ -37,18 +37,20 @@ void AiControlSystem::receive(const entityx::ComponentAddedEvent<Wall>& e)
 	m_obstacles.push_back(circle);	
 }
 
+// Method to get the information of the nodes and make a circle out of it and store them in m_pts
 void AiControlSystem::receive(const entityx::ComponentAddedEvent<Node>& e)
 {
 	entityx::Entity ent = e.entity;
-	Volume::Handle nodeVol = ent.component<Volume>();
-	Position::Handle nodePos = ent.component<Position>();	
+	Volume::Handle nodeVol = ent.component<Volume>(); // get the volume of node
+	Position::Handle nodePos = ent.component<Position>();// get the positions of node
 
-	m_nodeIds.push_back(ent.id());
+	m_nodeIds.push_back(ent.id()); // add the nodes to m_nodeIds
 
+	// Create a circle using the values of the nodes
 	sf::CircleShape circle(nodeVol->m_box.getRect().width * 1.5f);
 	circle.setOrigin(circle.getRadius(), circle.getRadius());
 	circle.setPosition(nodePos->m_position);
-	m_pts.push_back(circle);
+	m_pts.push_back(circle); // store the circle data in m_pts
 }
 
 void AiControlSystem::update(entityx::EntityManager& entities,
@@ -61,7 +63,7 @@ void AiControlSystem::update(entityx::EntityManager& entities,
    {
 	   m_tankAi->update(m_playerId, 
 		                    entity.id(),
-							m_nodeIds.at(m_tankAi->getIndex()),
+							m_nodeIds.at(m_tankAi->getIndex()), // get the nodes at the current index
 							entities, 
 						  events,
 							dt);

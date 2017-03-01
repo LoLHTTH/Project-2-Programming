@@ -33,7 +33,7 @@ struct ProjectileData
 	int m_damage;
 };
 
-struct NodeData
+struct NodeData // Node data
 {
 	std::string m_type;
 	sf::Vector2f m_position;

@@ -2,7 +2,7 @@
 
 
 TankAi::TankAi(std::vector<sf::CircleShape> const & obstacles, entityx::Entity::Id id)
-  : m_aiBehaviour(AiBehaviour::PATH_FOLLOWING)
+  : m_aiBehaviour(AiBehaviour::PATH_FOLLOWING) // go into path following mode
   , m_steering(0,0)
   , m_obstacles(obstacles)
 {
@@ -10,7 +10,7 @@ TankAi::TankAi(std::vector<sf::CircleShape> const & obstacles, entityx::Entity::
 
 void TankAi::update(entityx::Entity::Id playerId,
 	entityx::Entity::Id aiId,
-	entityx::Entity::Id nodeId,
+	entityx::Entity::Id nodeId, // get the current nodeId
 	entityx::EntityManager& entities,
 	entityx::EventManager& eventManager,
 	double dt)
@@ -36,10 +36,12 @@ void TankAi::update(entityx::Entity::Id playerId,
 		m_velocity = Math::truncate(m_velocity + m_steering, MAX_SPEED);
 
 		break;
-	case AiBehaviour::PATH_FOLLOWING:
-		m_steering = m_steering + thor::unitVector(vectorToNode);
-		m_steering = Math::truncate(m_steering, MAX_FORCE);
-		m_velocity = Math::truncate(m_velocity + m_steering, MAX_SPEED);
+	case AiBehaviour::PATH_FOLLOWING: // Method to follow a pathway using nodes
+		// Also used for steering towards the current node
+		m_steering = m_steering + thor::unitVector(vectorToNode); // get steerings and normalised vector to current node
+		m_steering += collisionAvoidance(aiId, entities); // avoid the walls!
+		m_steering = Math::truncate(m_steering, MAX_FORCE); // get the steering with force
+		m_velocity = Math::truncate(m_velocity + m_steering, MAX_SPEED); // get the velocity
 
 		break;
 	case AiBehaviour::STOP:
@@ -76,36 +78,35 @@ else if ((static_cast<int>(std::round(dest - currentRotation + 360))) % 360 < 18
 
 	if (m_aiBehaviour == AiBehaviour::PATH_FOLLOWING)
 	{
-		if (thor::length(vectorToNode) < MAX_SEE_AHEAD)
-		{
-			if (m_index < 20 && !turnBack)
+		if (thor::length(vectorToNode) < MAX_SEE_AHEAD) // if ai reaches the current node
+		{ // if current index is less than 20 and is not turning back
+			if (m_index < 20 && !turnBack) 
 			{
-				m_index++;
-				eventManager.emit<EvReportNode>(m_index);
+				m_index++; // increment index
+				eventManager.emit<EvReportNode>(m_index); // updates the current index into the event EvReportNode
 			}
-			if (m_index == 20)
+			if (m_index == 20) // if index is equal to 20
 			{
 				//m_aiBehaviour = AiBehaviour::SEEK_PLAYER;
-				position->m_rotation = 180;
-				turnBack = true;
+				position->m_rotation = 180; // Flips the tank
+				turnBack = true; // Make the tank go backwards
 			}
-			if (turnBack)
+			if (turnBack) // if it is turning back
 			{
-				if (m_index > 0)
+				if (m_index > 0) // if index is greater than 0
 				{			
-					m_index--;
-					eventManager.emit<EvReportNode>(m_index);
+					m_index--; // decrements index
+					eventManager.emit<EvReportNode>(m_index); // updates the current index into the event EvReportNode
 				}
 				else
 				{
-					turnBack = false;
+					turnBack = false; // make turnBack false
 				}
 			}
-			std::cout << "At Index : " << m_index + 1 << std::endl;
 		}
 		else
 		{
-			motion->m_speed = thor::length(m_velocity);
+			motion->m_speed = thor::length(m_velocity); // keep moving
 		}
 	}
 

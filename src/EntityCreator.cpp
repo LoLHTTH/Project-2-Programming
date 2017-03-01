@@ -94,23 +94,25 @@ void WallCreator::create(entityx::Entity& entity)
 	entity.assign<Wall>();
 }
 
+// A node creator taking in a string type, pos and a radius
 NodeCreator::NodeCreator(std::string type,
 	sf::Vector2f position,
 	double radius) 
-
+	// assign them
 	: m_type(type)
 	,m_position(position)
 	,m_radius(radius)
 {
 }
 
+// Method to create a node
 void NodeCreator::create(entityx::Entity& entity)
 {
 	auto volume = Volume();
-	volume.m_box = CollisionBox(33, 23);
+	volume.m_box = CollisionBox(33, 23); // size of collision box of node
 
-	entity.assign<Volume>(volume);
-	entity.assign<Display>(sf::IntRect(2, 129, 33, 23));
-	entity.assign<Position>(m_position, m_radius);
-	entity.assign<Node>();
+	entity.assign<Volume>(volume);  // assign volume of node to entity
+	entity.assign<Display>(sf::IntRect(2, 129, 33, 23)); // assign image to entity
+	entity.assign<Position>(m_position, m_radius); // assign the position and radius to entity
+	entity.assign<Node>(); // assign a node entity
 }

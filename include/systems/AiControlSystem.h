@@ -40,7 +40,7 @@ private:
 
 	std::vector<sf::CircleShape> m_obstacles;
 
-	std::vector<entityx::Entity::Id> m_nodeIds;
-	std::vector<sf::CircleShape> m_pts;
+	std::vector<entityx::Entity::Id> m_nodeIds; // to hold node ids
+	std::vector<sf::CircleShape> m_pts; // to hold the nodes
 };
 

@@ -1,6 +1,7 @@
 #include "utils/LevelLoader.h"
 void operator >> (const YAML::Node& nodeNode, NodeData& node)
 {
+	// To get the node data from YAML file and store them in NodeData
 	node.m_type = nodeNode["type"].as<std::string>();
 	node.m_position.x = nodeNode["position"]["x"].as<float>();
 	node.m_position.y = nodeNode["position"]["y"].as<float>();
@@ -53,8 +54,9 @@ void operator >> (const YAML::Node& levelNode, LevelData& level)
    }
 
    const YAML::Node& nodesNode = levelNode["nodes"].as<YAML::Node>();
-   for (unsigned i = 0; i < nodesNode.size(); ++i)
+   for (unsigned i = 0; i < nodesNode.size(); ++i) // go through each node
    {
+	   // add each node to the level stored as vectors
 	   NodeData node;
 	   nodesNode[i] >> node;
 	   level.m_nodes.push_back(node);

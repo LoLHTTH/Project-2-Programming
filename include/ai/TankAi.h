@@ -57,11 +57,11 @@ private:
 
 	const float MAX_FORCE = 10.0f;
 
-	float MAX_SPEED = 100.0f;
+	float MAX_SPEED = 125.0f;
 
 	bool turnBack;
 
-	int m_index = 0;
+	int m_index = 0; // the current index
 
 	std::vector<sf::CircleShape> const & m_obstacles;
 
